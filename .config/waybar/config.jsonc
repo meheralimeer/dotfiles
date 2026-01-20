@@ -1,13 +1,226 @@
 {
     "layer": "top",
     "position": "top",
-
-    "modules-left": ["user", "clock","cpu", "memory", "hyprland/workspaces"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["power-profiles-daemon", "bluetooth", "network", "pulseaudio", "battery"],
-    "spacing": 4, //4 is default value
+    "modules-left": [
+        "clock",
+        "cpu",
+        "memory",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "power-profiles-daemon",
+        "bluetooth",
+        "network",
+        "pulseaudio",
+        "backlight",
+        "battery"
+    ],
+    "spacing": 4,
     "mode": "dock",
     "fixed-center": true,
-
-    "reload_syle_on_change": true
+    "reload_style_on_change": true,
+    "clock": {
+        "format": "{:%H:%M}  ",
+        "format-alt": "{:%A, %B %d, %Y (%R)}  ",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "tz_up",
+            "on-scroll-down": "tz_down"
+        }
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "CPU: {usage}% {icon}",
+        "format-icons": [
+            " ",
+            "▂",
+            "▃",
+            "▄",
+            "▅",
+            "▆",
+            "▇",
+            "█"
+        ],
+        "on-click": "kitty --title btop sh -c 'btop'"
+    },
+    "memory": {
+        "interval": 30,
+        "format": "RAM: {percentage}% ",
+        "format-alt": "RAM: {used:0.1f}G/{total:0.1f}G ",
+        "tooltip-format": "{used:0.1f}GiB used / {total:0.1f}GiB total",
+        "on-click": "kitty --title btop sh -c 'btop'"
+    },
+    "hyprland/workspaces": {
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "urgent": "",
+            "empty": ""
+        },
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
+    "hyprland/window": {
+        "format": " > {title}",
+        "max-length": 50,
+        "separate-outputs": true
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "blueman-manager"
+    },
+    "network": {
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": "󰈀 {ipaddr}/{cidr}",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰤮 Disconnected",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "on-click": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon}  {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ]
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% 󰋊",
+        "path": "/"
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+    },
+    "custom/launcher": {
+        "format": "",
+        "on-click": "rofi -show drun",
+        "tooltip": false
+    },
+    "custom/power": {
+        "format": "⏻ ",
+        "tooltip": false,
+        "on-click": "wlogout --protocol layer-shell"
+    }
 }
