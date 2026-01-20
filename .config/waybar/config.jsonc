@@ -1,0 +1,13 @@
+{
+    "layer": "top",
+    "position": "top",
+
+    "modules-left": ["user", "clock","cpu", "memory", "hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["power-profiles-daemon", "bluetooth", "network", "pulseaudio", "battery"],
+    "spacing": 4, //4 is default value
+    "mode": "dock",
+    "fixed-center": true,
+
+    "reload_syle_on_change": true
+}
