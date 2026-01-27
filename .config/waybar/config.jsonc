@@ -2,15 +2,17 @@
     "layer": "top",
     "position": "top",
     "modules-left": [
+        "custom/windows",
         "clock",
         "cpu",
-        "memory",
-        "hyprland/workspaces"
+        "memory"
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/window",
+        "group/media"
     ],
     "modules-right": [
+        "custom/notification",
         "power-profiles-daemon",
         "bluetooth",
         "network",
@@ -66,21 +68,6 @@
         "format-alt": "RAM: {used:0.1f}G/{total:0.1f}G ",
         "tooltip-format": "{used:0.1f}GiB used / {total:0.1f}GiB total",
         "on-click": "kitty --title btop sh -c 'btop'"
-    },
-    "hyprland/workspaces": {
-        "active-only": false,
-        "all-outputs": true,
-        "format": "{icon}",
-        "on-click": "activate",
-        "format-icons": {
-            "active": "",
-            "default": "",
-            "urgent": "",
-            "empty": ""
-        },
-        "persistent-workspaces": {
-            "*": 5
-        }
     },
     "hyprland/window": {
         "format": " > {title}",
@@ -222,5 +209,86 @@
         "format": "⏻ ",
         "tooltip": false,
         "on-click": "wlogout --protocol layer-shell"
+    },
+    // Advanced Modules
+    "custom/windows": {
+        "format": "  ",
+        "return-type": "json",
+        "exec": "$HOME/.config/waybar/scripts/window_list.py",
+        "interval": 2,
+        "on-click": "hyprctl dispatch togglespecialworkspace",
+        "tooltip": true
+    },
+    "group/media": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "media-controls",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "custom/media-info",
+            "image#album-art",
+            "custom/prev",
+            "custom/play",
+            "custom/next"
+        ]
+    },
+    "custom/media-info": {
+        "format": "  {icon}  {text}",
+        "return-type": "json",
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "max-length": 40,
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{title}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{playerName}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click": "playerctl play-pause"
+    },
+    "image#album-art": {
+        "path": "/tmp/waybar_album_art.png",
+        "size": 32,
+        "interval": 2
+    },
+    "custom/prev": {
+        "format": "  ",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+    "custom/play": {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{title}}\", \"alt\": \"{{status}}\", \"icon\": \"{{status}}\"}' -F",
+        "format-icons": {
+            "Playing": "  ",
+            "Paused": "  "
+        },
+        "on-click": "playerctl play-pause",
+        "tooltip": false
+    },
+    "custom/next": {
+        "format": "  ",
+        "on-click": "playerctl next",
+        "tooltip": false
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }

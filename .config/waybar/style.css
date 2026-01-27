@@ -188,3 +188,45 @@ label:focus {
     color: #f38ba8;
     padding-left: 15px;
 }
+
+#custom-windows {
+    background-color: transparent;
+    color: #cba6f7;
+    padding-left: 10px;
+}
+
+/* Media Drawer */
+#custom-media-info {
+    color: #cba6f7;
+    margin-right: 15px;
+}
+
+#image-album-art {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.media-controls {
+    color: #cdd6f4;
+    padding: 0 5px;
+}
+
+.media-controls:hover {
+    color: #cba6f7;
+}
+
+/* Notification */
+#custom-notification {
+    font-family: "JetBrainsMono Nerd Font";
+    padding-right: 15px;
+    color: #f38ba8;
+}
+
+#custom-notification.notification {
+    color: #fab387;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
