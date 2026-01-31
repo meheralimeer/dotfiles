@@ -14,3 +14,7 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 -- Fast save/quit
 keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save" })
 keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
+
+-- Others
+vim.keymap.set('n', '<leader>a', ':keepjumps normal! ggVG<cr>', { desc = "Select all text in current buffer" })
+
